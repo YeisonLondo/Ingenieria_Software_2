@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-         $user = new User();
+        $user = new User();
         $user-> name =$request->name;
         $user-> peso = $request->peso;
         $user-> altura = $request->altura;
@@ -37,7 +37,7 @@ class UserController extends Controller
         $user-> direccion = $request->direccion;
         $user-> fecha_nacimiento = $request->fecha_nacimiento;
         $user-> email = $request->email;
-        $user-> password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->save();
         return response()->json($user, 201);
     }
