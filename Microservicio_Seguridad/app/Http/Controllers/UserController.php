@@ -30,9 +30,15 @@ class UserController extends Controller
             return response()->json(['message' => 'Credenciales inválidas'], 401);
         }
         $token = $user->createToken('auth_token')->plainTextToken;
+
+       if ($user->role == 1) 
+        {$roleName = 'Administrador';} 
+       else {$roleName = 'Usuario';}
+
         return response()->json([
             'access_token' => $token,
-            'user_name'=>$user->name
+            'user_name'=>$user->name,
+            'rol'=> $roleName
         ]);
     }
 
