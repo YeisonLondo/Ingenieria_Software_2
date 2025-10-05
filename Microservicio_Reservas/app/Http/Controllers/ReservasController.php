@@ -39,13 +39,19 @@ class ReservasController extends Controller
         return response()->json(['message' => 'Reserva cancelada correctamente']);
     }
 
-    public function reservasPorUsuario($id_usuario)
+    public function mostrar_reservas()
+    {
+        $reserva = Reserva::all();
+        return response()->json($reserva);
+    }
+
+    public function reservas_usuario($id_usuario)
     {
         $reservas = Reserva::where('id_usuario', $id_usuario)->get();
         return response()->json($reservas);
     }
 
-    public function reservasPorClase($id_clase)
+    public function reservas_clase($id_clase)
 {
     $reservas = Reserva::where('id_clase', $id_clase)
                        ->where('estado', 'confirmada')
@@ -56,5 +62,4 @@ class ReservasController extends Controller
         'reservas' => $reservas
     ]);
 }
-
 }

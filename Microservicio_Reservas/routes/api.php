@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/reservar', [ReservasController::class, 'reservar']);
 Route::put('/cancelar/{id}', [ReservasController::class, 'cancelar']);
-Route::get('/reservas_usuarios/{id_usuario}', [ReservasController::class, 'reservasPorUsuario']);
-Route::get('/reservas_clase/{id_clase}', [ReservasController::class, 'reservasPorClase']);
+Route::get('/mostrar_reservas', [ReservasController::class, 'mostrar_reservas']);
+Route::get('/reservas_usuarios/{id_usuario}', [ReservasController::class, 'reservas_usuario']);
+Route::get('/reservas_clase/{id_clase}', [ReservasController::class, 'reservas_clase']);
