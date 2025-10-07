@@ -69,7 +69,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if(!$user) {
-            return response()->json(['message' => 'Pelicula no encontrada'], 404);
+            return response()->json(['message' => 'Usuario no encontrada'], 404);
         }
         $user-> name =$request->name;
         $user-> peso = $request->peso;
@@ -78,7 +78,6 @@ class UserController extends Controller
         $user-> direccion = $request->direccion;
         $user-> fecha_nacimiento = $request->fecha_nacimiento;
         $user-> email = $request->email;
-        $user-> password = $request->password;
         $user->save();
         return response()->json($user, 201);
     }
