@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  usuarios_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: usuarios_app
+    container_name: usuarios_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    ports:
+      - "8001:8000"
+    depends_on:
+      - usuarios_db
+
+  usuarios_db:
+    image: mysql:8.0
+    container_name: usuarios_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: usuarios_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    ports:
+      - "3309:3306"
+    volumes:
+      - usuarios_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: usuarios_phpmyadmin
+    restart: always
+    ports:
+      - "8083:80"
+    environment:
+      PMA_HOST: usuarios_db
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - usuarios_db
+
+volumes:
+  usuarios_data:
