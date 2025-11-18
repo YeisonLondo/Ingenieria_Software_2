@@ -1,10 +1,11 @@
 from datetime import datetime
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
+import os
 app = Flask(__name__)
-client = MongoClient('mongodb://Localhost:27017/')
-db = client["microservicio_gestion_clases"]
-clases_collection = db["clases"]
+MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
+MONGO_PORT = os.getenv("MONGO_PORT", "27017")
+MONGO_DB   = os.getenv("MONGO_DB", "microservicio_gestion_clases")
 
 @app.route('/mostrar_clases', methods = ['GET'])
 def mostrar_clases():

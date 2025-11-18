@@ -1,0 +1,25 @@
+services:
+  seguridad_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: seguridad_app
+    container_name: seguridad_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    ports:
+      - "8003:8000"
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: usuarios_db
+      DB_PORT: 3306
+      DB_DATABASE: usuarios_db
+      DB_USERNAME: laravel
+      DB_PASSWORD: laravel
+      JWT_SECRET: someSecretHere
+    networks:
+      - micro_red
+
+networks:
+  micro_red:
+    external: true

@@ -1,22 +1,32 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
-# Instalar dependencias del sistema
+# Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
-    zip unzip git libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql gd
+    libzip-dev \
+    zip \
+    unzip \
+    libpng-dev \
+    && docker-php-ext-install pdo_mysql zip gd
 
-# Instalar Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Copiar el proyecto
-COPY . /var/www
+# Configurar directorio de trabajo
 WORKDIR /var/www
 
-# Instalar dependencias de Laravel
-RUN composer install
+# Copiar archivos del proyecto
+COPY . .
 
-# Dar permisos a Laravel
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+# Instalar Composer dentro del contenedor
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Instalar dependencias Laravel
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# Permisos
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# Exponer puerto 8002 (lo usaremos en docker-compose)
+EXPOSE 8002
+
+# Comando de inicio
+CMD php artisan serve --host=0.0.0.0 --port=8002
+
