@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  recomendaciones_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: recomendaciones_app
+    container_name: recomendaciones_app
+    restart: unless-stopped
+    ports:
+      - "5003:5003"
+    environment:
+      MONGO_HOST: mongo   # debe coincidir con el servicio mongo de gestión clases
+      MONGO_PORT: 27017
+      MONGO_DB: microservicio_gestion_clases  # nombre de la DB que ya usas
+    networks:
+      - micro_red
+
+networks:
+  micro_red:
+    external: true
