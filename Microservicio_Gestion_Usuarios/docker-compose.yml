@@ -16,6 +16,8 @@ services:
       - "8001:8000"
     depends_on:
       - usuarios_db
+    networks:
+      - micro_red
 
   usuarios_db:
     image: mysql:8.0
@@ -30,6 +32,8 @@ services:
       - "3309:3306"
     volumes:
       - usuarios_data:/var/lib/mysql
+    networks:
+      - micro_red
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -42,6 +46,12 @@ services:
       MYSQL_ROOT_PASSWORD: root
     depends_on:
       - usuarios_db
+    networks:
+      - micro_red
+
+networks:
+  micro_red:
+    external: true
 
 volumes:
   usuarios_data:

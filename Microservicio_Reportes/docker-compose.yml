@@ -14,8 +14,6 @@ services:
       - reportes_storage:/var/www/storage
     ports:
       - "8002:8002"
-    networks:
-      - micro_red
     environment:
       APP_ENV: local
       APP_KEY: base64:xPxxxxxx
@@ -25,6 +23,8 @@ services:
       DB_DATABASE: reservas_db
       DB_USERNAME: reservas
       DB_PASSWORD: reservas
+    networks:
+      - micro_red
 
 
 networks:

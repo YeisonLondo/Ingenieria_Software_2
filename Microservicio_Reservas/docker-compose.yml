@@ -13,9 +13,11 @@ services:
       php artisan serve --host=0.0.0.0 --port=8000
       "
     ports:
-      - "8002:8000"
+      - "8003:8000"
     depends_on:
       - reservas_db
+    networks:
+      - micro_red
 
   reservas_db:
     image: mysql:8.0
@@ -30,6 +32,12 @@ services:
       - "3307:3306"
     volumes:
       - reservas_data:/var/lib/mysql
+    networks:
+      - micro_red
+
+networks:
+  micro_red:
+    external: true
 
 volumes:
   reservas_data:

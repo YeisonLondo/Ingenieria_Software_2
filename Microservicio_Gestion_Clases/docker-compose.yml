@@ -13,6 +13,8 @@ services:
       - MONGO_DB=microservicio_gestion_clases
     depends_on:
       - mongo
+    networks:
+      - micro_red
 
   mongo:
     image: mongo:6.0
@@ -21,6 +23,14 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - micro_red
+
+networks:
+  micro_red:
+    external: true
 
 volumes:
   mongo_data:
+    driver: local
+    

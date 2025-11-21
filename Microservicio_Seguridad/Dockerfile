@@ -4,6 +4,7 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev \
     nginx \
+    git \
     zip \
     unzip \
     && docker-php-ext-install pdo_mysql zip
