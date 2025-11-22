@@ -7,6 +7,10 @@ MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
 MONGO_PORT = os.getenv("MONGO_PORT", "27017")
 MONGO_DB   = os.getenv("MONGO_DB", "microservicio_gestion_clases")
 
+client = MongoClient(f"mongodb://{MONGO_HOST}:{MONGO_PORT}/")
+db = client[MONGO_DB]
+clases_collection = db["clases"]
+
 @app.route('/mostrar_clases', methods = ['GET'])
 def mostrar_clases():
     clases = list(clases_collection.find({},  {"_id": 0}))
